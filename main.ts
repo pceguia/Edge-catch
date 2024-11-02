@@ -1,21 +1,23 @@
 input.onButtonPressed(Button.A, function () {
-    game.pause()
-    basic.showLeds(`
-        # . . . .
-        # . . . .
-        # . . . .
-        # . . . .
-        # . . . .
-        `)
-    if (sprite.get(LedSpriteProperty.X) == 0 && _false == just_scored) {
+    if (just_scored == _false) {
         just_scored = _true
-        game.addScore(1)
-        basic.showIcon(IconNames.Yes)
-        playScoreSong()
-    } else {
-        playMissSong()
+        game.pause()
+        basic.showLeds(`
+            # . . . .
+            # . . . .
+            # . . . .
+            # . . . .
+            # . . . .
+            `)
+        if (sprite.get(LedSpriteProperty.X) == 0) {
+            game.addScore(1)
+            basic.showIcon(IconNames.Yes)
+            playScoreSong()
+        } else {
+            playMissSong()
+        }
+        game.resume()
     }
-    game.resume()
 })
 function playMissSong () {
     music.play(music.stringPlayable("C5 B A G F E D C ", 300), music.PlaybackMode.UntilDone)
