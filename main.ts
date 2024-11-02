@@ -23,22 +23,25 @@ function playMissSong () {
     music.play(music.stringPlayable("C5 B A G F E D C ", 300), music.PlaybackMode.UntilDone)
 }
 input.onButtonPressed(Button.B, function () {
-    game.pause()
-    basic.showLeds(`
-        . . . . #
-        . . . . #
-        . . . . #
-        . . . . #
-        . . . . #
-        `)
-    if (4 == sprite.get(LedSpriteProperty.X)) {
-        game.addScore(1)
-        basic.showIcon(IconNames.Skull)
-        playScoreSong()
-    } else {
-        playMissSong()
+    if (just_scored == _false) {
+        just_scored = _true
+        game.pause()
+        basic.showLeds(`
+            . . . . #
+            . . . . #
+            . . . . #
+            . . . . #
+            . . . . #
+            `)
+        if (sprite.get(LedSpriteProperty.X) == 4) {
+            game.addScore(1)
+            basic.showIcon(IconNames.Skull)
+            playScoreSong()
+        } else {
+            playMissSong()
+        }
+        game.resume()
     }
-    game.resume()
 })
 function playScoreSong () {
     music.play(music.stringPlayable("C D E F G A B C5 ", 300), music.PlaybackMode.UntilDone)
